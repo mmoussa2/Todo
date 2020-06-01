@@ -7,13 +7,16 @@ const filterOption = document.querySelector('.filter-todo');
 //EVENT LISTENERS
 todoButton.addEventListener('click', addTodo);
 todoList.addEventListener('click', deleteCheck);
-filterOption.addEventListener('click',filterTodo)
+filterOption.addEventListener('change',filterTodo)
 
+//FUNCTIONS
 function addTodo(e){
   e.preventDefault();
+
+  //Todo DIV
   const todoDiv = document.createElement("div");
   todoDiv.classList.add("todo");
-
+  //Create Li
   const newTodo = document.createElement('li');
   newTodo.innerText = todoInput.value;
   newTodo.classList.add('todo-item');
@@ -52,24 +55,41 @@ function deleteCheck(e){
 }
 
 function filterTodo(e){
-  const todos = todoList.childNodes;
-  todos.forEach(function(todo){
+  //const list = todoList.childNodes;
+  const list = [].slice.call(todoList.children);
+
+  list.forEach(function(todo) {
+
     switch(e.target.value){
       case "all":
-      todo.style.display ="flex"
+      todo.style.display = "flex";
+      break;
       case "completed":
         if(todo.classList.contains('completed')){
-          console.log(todo.classList.contains('completed'))
           todo.style.display ='flex';
          } else {
            todo.style.display = "none";
          }
-      // case "uncompleted":
-      //   if (!todo.classList.contains('completed')) {
-      //     todo.style.display = 'flex';
-      //   } else {
-      //     todo.style.display = "none";
-      //   }
+         break;
+      case "uncompleted":
+        if (!todo.classList.contains('completed')) {
+          todo.style.display = 'flex';
+        } else {
+          todo.style.display = "none";
+        }
+        break;
     }
+
+      // if (e.target.value === "all") todo.style.display = "flex";
+    // else if (e.target.value === "completed") {
+    //   if (todo.classList.contains('completed')) {
+    //     todo.style.display = 'flex';
+    //   } else todo.style.display = "none";
+    // } else if (e.target.value === "uncompleted") {
+    //   if (!todo.classList.contains('completed')) {
+    //     todo.style.display = 'flex';
+    //   } else todo.style.display = "none";
+    // }
+
   });
 }
